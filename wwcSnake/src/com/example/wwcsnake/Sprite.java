@@ -23,7 +23,7 @@ public class Sprite {
 		body.add(new Coordinate(5, 3));
 		body.add(new Coordinate(5, 2));
 		direction = 1;
-		tick = 0.1f;//0.5s动一次
+		tick = 0.01f;//0.5s动一次
 	}
 
 	public void moveUp() {

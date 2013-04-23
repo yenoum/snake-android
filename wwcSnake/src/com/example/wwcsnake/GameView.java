@@ -22,7 +22,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	int strY = 0;
 	int height = 96;
 	int width = 64;
-	int status = 0;// 记录当前在第己关
+	int status = 0;// 记录当前在第几关
 	Paint paint;
 	Bitmap wall;
 	Bitmap floor;
@@ -86,17 +86,21 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
 	public boolean onKeyUp(int keyCode, KeyEvent event) {// 键盘抬起
 		if (keyCode == 19) {// 上
-			this.snake.direction = 0;
+			if(this.snake.direction == 1 || this.snake.direction == 3)
+				this.snake.direction = 0;
 
 		}
 		if (keyCode == 20) {// 
-			this.snake.direction = 2;
+			if(this.snake.direction == 1 || this.snake.direction == 3)
+				this.snake.direction = 2;
 		}
 		if (keyCode == 21) {// 左
-			this.snake.direction = 3;
+			if(this.snake.direction == 0 || this.snake.direction == 2)
+				this.snake.direction = 3;
 		}
 		if (keyCode == 22) {// 右
-			this.snake.direction = 1;
+			if(this.snake.direction == 0 || this.snake.direction == 2)
+				this.snake.direction = 1;
 		}
 
 		return false;
@@ -105,8 +109,30 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	public boolean onTouchEvent(MotionEvent event) {
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			if(event.getX()>(this.snake.head.x-this.strX)*5)
-				this.snake.direction = 1;
+			if(this.snake.direction==0){
+				if(event.getX()>(this.snake.head.x-this.strX)*5)
+					this.snake.direction = 1;
+				if(event.getX()<(this.snake.head.x-this.strX)*5)
+					this.snake.direction = 3;
+			}
+			else if(this.snake.direction==2){
+				if(event.getX()>(this.snake.head.x-this.strX)*5)
+					this.snake.direction = 1;
+				if(event.getX()<(this.snake.head.x-this.strX)*5)
+					this.snake.direction = 3;
+			}
+			else if(this.snake.direction==1){
+				if(event.getY()>(this.snake.head.y-this.strY)*5)
+					this.snake.direction = 2;
+				if(event.getY()<(this.snake.head.y-this.strY)*5)
+					this.snake.direction = 0;
+			}
+			else if(this.snake.direction==3){
+				if(event.getY()>(this.snake.head.y-this.strY)*5)
+					this.snake.direction = 2;
+				if(event.getY()<(this.snake.head.y-this.strY)*5)
+					this.snake.direction = 0;
+			}
 			break;
 		case MotionEvent.ACTION_MOVE:
 
