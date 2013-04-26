@@ -3,13 +3,13 @@ package com.example.wwcsnake;
 import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceHolder;
-public class GameViewDrawThread extends Thread{
+public class HelloViewDrawThread extends Thread{
 	private int sleepSpan = 100;//睡眠的毫秒数
 	private boolean flag = true;//循环标记位
-	GameView gameView;//游戏界面的引用
+	HelloView helloView;//游戏界面的引用
 	SurfaceHolder surfaceHolder = null;	
-	public GameViewDrawThread(GameView gameView,SurfaceHolder surfaceHolder){//构造器
-		this.gameView = gameView;
+	public HelloViewDrawThread(HelloView helloView,SurfaceHolder surfaceHolder){//构造器
+		this.helloView = helloView;
 		this.surfaceHolder = surfaceHolder;
 	}
 	public void run(){
@@ -17,14 +17,12 @@ public class GameViewDrawThread extends Thread{
 		long startTime = System.nanoTime();
 		while(flag){
 			c = null;
-			try {
-				this.gameView.deltaTime = (System.nanoTime()-startTime) / 1000000000.0f;
-	            startTime = System.nanoTime();
+			try {     
 				// 锁定整个画布，在内存要求比较高的情况下，建议参数不要为null
 			    c = surfaceHolder.lockCanvas(null);
 			    synchronized (this.surfaceHolder) {
 			    	try{
-			    		gameView.myDraw(c);	
+			    		helloView.myDraw(c);	
 			    		
 			    	}
 			    	catch(Exception e){}

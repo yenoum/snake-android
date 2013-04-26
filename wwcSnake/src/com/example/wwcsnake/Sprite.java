@@ -11,8 +11,8 @@ public class Sprite {
 	Coordinate head;
 	float ticktime = 0;
 	ArrayList<Coordinate> body = new ArrayList<Coordinate>();
-	int direction;// 上下左右，0，1，2，3
-	float tick;
+	int direction;// 0is up,1 is right,2 is down,3 is left
+	float tick;//the speed of the snake,the small the fast
 
 	public Sprite(GameView gameview) {
 		
@@ -23,7 +23,7 @@ public class Sprite {
 		body.add(new Coordinate(5, 3));
 		body.add(new Coordinate(5, 2));
 		direction = 1;
-		tick = 0.01f;//0.5s动一次
+		tick = 0.1f;//0.5s/little move
 	}
 
 	public void moveUp() {
@@ -55,7 +55,7 @@ public class Sprite {
 	}
 
 	public void scroll() {
-		// 向右向下滚屏幕
+		// the fuction to scroll the screen when the snake is near the bound
 		if (head.x - gameview.strX > (this.gameview.width - 10)) {
 
 			if ((gameview.strX + 55) >= 160 - this.gameview.width)
@@ -70,7 +70,7 @@ public class Sprite {
 			else
 				gameview.strY += 55;
 		}
-		// 向左向上滚屏幕
+		// 往左滚
 		if ((head.x - gameview.strX) <= 3) {
 			if ((gameview.strX - 55) <= 0)
 				gameview.strX = 0;
