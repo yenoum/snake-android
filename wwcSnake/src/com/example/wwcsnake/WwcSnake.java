@@ -9,21 +9,29 @@ import android.view.WindowManager;
 import android.view.KeyEvent;
 import android.os.Handler;
 import android.os.Message;
+import android.media.MediaPlayer;
 
 public class WwcSnake extends Activity {
 	
 
+	boolean isSound = true;//是否播放声音
+	MediaPlayer backSound;//背景音乐
+	MediaPlayer startSound;//开始和菜单时的音乐
+	
+	
+	
 	
 	//int map1[][];
 	GameView gameview;
 	HelloView helloView;
-	MuneView muneView;
+	MenuView menuView;
 	HelloViewThread helloViewThread;
 	int action = 0;
 	//Sprite snake;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.initSound();
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 		WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -48,7 +56,7 @@ public class WwcSnake extends Activity {
         		initAndToMenuView();
         	}
         	else if(msg.what == 2){//收到MenuView发来的消息
-        		
+        		initToGameView();
         	}   
         	else if(msg.what == 3){
         		
@@ -76,6 +84,12 @@ public class WwcSnake extends Activity {
 
 		return false;
 	}
+	public void initSound(){
+		backSound  = MediaPlayer.create(this, R.raw.sound1);//背景音乐
+        backSound.setLooping(true); //设置循环
+        startSound = MediaPlayer.create(this, R.raw.sound3);
+        startSound.setLooping(true);
+	}
 	
 	public void inittoHelloView(){
 		helloView = new HelloView(this);
@@ -83,12 +97,17 @@ public class WwcSnake extends Activity {
     	helloViewThread = new HelloViewThread(this);
     	helloViewThread.start();
 	}
-	 public void initAndToMenuView(){
-	    	menuView = new MenuView(this);
-	    	this.setContentView(menuView);
-	    	menuViewGoThread = new MenuViewGoThread(this);
-	    	menuViewGoThread.start();
-	    }
+
+	public void initAndToMenuView() {
+		Log.d("TAG", "menuview");
+		menuView = new MenuView(this);
+		this.setContentView(menuView);
+	}
+	
+	public void initToGameView() {
+		gameview = new GameView(this,0);
+		this.setContentView(gameview);
+	}
 }
 
   

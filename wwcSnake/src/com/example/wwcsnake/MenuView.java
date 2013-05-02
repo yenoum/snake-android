@@ -9,7 +9,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 public class MenuView extends SurfaceView implements SurfaceHolder.Callback{
 	WwcSnake wwcSnake;//主Activity的引用
-	MenuViewDrawThread menuViewDrawThread;
 	Paint paint;//画笔
 	Bitmap start1;//开始游戏图片
 	Bitmap sound1;//声音图片
@@ -19,6 +18,7 @@ public class MenuView extends SurfaceView implements SurfaceHolder.Callback{
 	Bitmap menubackground;//大背景图片
 	Bitmap menubackground2;//小背景图片
 	int menubackgroudX = 0;//需要移动的背景的坐标
+	MenuViewDrawThread menuViewDrawThread;
 	public MenuView(WwcSnake wwcSnake) {//构造器
 		super(wwcSnake);
 		this.wwcSnake = wwcSnake;
@@ -87,21 +87,23 @@ public class MenuView extends SurfaceView implements SurfaceHolder.Callback{
 	}
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
+
 	}
 	public void surfaceCreated(SurfaceHolder holder) {
+
 		menuViewDrawThread.setFlag(true);
 		menuViewDrawThread.start();
 	}
 	public void surfaceDestroyed(SurfaceHolder holder) {
-        boolean retry = true;
-        menuViewDrawThread.setFlag(false);//停止刷帧线程
-        while (retry) {
-            try {
-            	menuViewDrawThread.join();//等待刷帧线程结束
-                retry = false;
-            } 
-            catch (InterruptedException e) {//不断地循环，直到等待的线程结束
-            }
-        }
+		 boolean retry = true;
+	        menuViewDrawThread.setFlag(false);//停止刷帧线程
+	        while (retry) {
+	            try {
+	            	menuViewDrawThread.join();//等待刷帧线程结束
+	                retry = false;
+	            } 
+	            catch (InterruptedException e) {//不断地循环，直到等待的线程结束
+	            }
+	        }
 	}
 }
